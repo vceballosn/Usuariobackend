@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Implementation-Title: web-portal-backend
+Implementation-Version: 1.0.2-SNAPSHOT
+Built-By: vladimir
+Implementation-Vendor-Id: uy.com.geocom.prueba
+Build-Jdk: 1.8.0_161
+Implementation-URL: http://projects.spring.io/spring-boot/controlleuse
+ r/
+Created-By: Maven Integration for Eclipse
+Implementation-Vendor: Geocom
+
