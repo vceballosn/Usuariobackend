@@ -6,7 +6,7 @@ import java.util.List;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
+import com.fasterxml.jackson.databind.SerializationFeature;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,6 +35,7 @@ public class UsuarioController {
 		 
 		this.mapper = new ObjectMapper();
 		
+	
 		Usuario usuario = mapper.readValue(userJson, Usuario.class);
 		
 		if(!this.validarUsuario(usuario)){
@@ -93,7 +94,7 @@ public class UsuarioController {
 		Usuario usuario = mapper.readValue(userJson, Usuario.class);
 		
 		if (usuario.getId() ==null){
-			throw new Exception(" El recipe no Existe");
+			throw new Exception(" El Usuario no Existe");
 		}else
 		
 		this.usuarioService.delete(usuario);

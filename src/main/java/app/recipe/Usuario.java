@@ -1,7 +1,10 @@
 package app.recipe;
 
 
+import java.io.Serializable;
+import java.text.ParseException;
 import java.util.List;
+
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
@@ -18,6 +21,12 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+
 
 
 
@@ -26,7 +35,7 @@ import javax.persistence.Table;
 @Entity
 @Table (name ="usuario")
 @Access (AccessType.FIELD)
-public class Usuario   {
+public class Usuario implements Serializable  {
 	@Id
     @GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="id",unique=true,nullable = false )
@@ -52,7 +61,9 @@ public class Usuario   {
 	private  String password;
 	
 	@Column(name="fecha_creacion", nullable = false )
-	private  java.util.Date fechaCreacion;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+	private  java.util.Calendar fechaCreacion;
+	
 	
 	@Column(name="activo", nullable = false )
 	private  int activo;
@@ -113,11 +124,11 @@ public class Usuario   {
 		this.password = password;
 	}
 
-	public java.util.Date getFechaCreacion() {
+	public  java.util.Calendar getFechaCreacion()  {
 		return fechaCreacion;
 	}
 
-	public void setFechaCreacion(java.sql.Date fechaCreacion) {
+	public void setFechaCreacion( java.util.Calendar fechaCreacion) {
 		this.fechaCreacion = fechaCreacion;
 	}
 

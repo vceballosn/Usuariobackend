@@ -17,6 +17,7 @@ import org.springframework.stereotype.Repository;
 
 import app.recipe.Usuario;
 
+
 @Repository
 @Transactional
 public class UsuarioDatasourceImpl  implements UsuarioDatasource,Serializable {
@@ -45,7 +46,7 @@ public class UsuarioDatasourceImpl  implements UsuarioDatasource,Serializable {
 		List<Usuario> listaUsuario =null;
 		try{
 		
-		Query query =	sessionFactory.getCurrentSession().createQuery(" select us.id,us.nombres,us.apellidos,us.email,us.telefono,us.userName,us.password,us.fechaCreacion,us.activo,us.rolId from Usuario us where us.userName = :userName ");
+		Query query =	sessionFactory.getCurrentSession().createQuery(" select us from Usuario us where us.userName = :userName ");
 		query.setParameter("userName", usuario.getUsername());
 		listaUsuario  = query.list();			
 		}catch(Exception e){
@@ -58,9 +59,9 @@ public class UsuarioDatasourceImpl  implements UsuarioDatasource,Serializable {
     public List<Usuario> consultaPorFecha(Usuario usuario) {
 		List<Usuario> listaUsuario =null;
 		try{
-		
-		Query query =	sessionFactory.getCurrentSession().createQuery(" select us.id,us.nombres,us.apellidos,us.email,us.telefono,us.userName,us.password,us.fechaCreacion,us.activo,us.rolId from Usuario us where us.fechaCreacion = :fechaCreacion ");
-		query.setParameter("fechaCreacion", usuario.getFechaCreacion());
+			
+		Query query =	sessionFactory.getCurrentSession().createQuery(" select us from Usuario us where us.fechaCreacion = :fechaCreacion ");
+		query.setCalendarDate("fechaCreacion", usuario.getFechaCreacion());
 		listaUsuario  = query.list();
 		System.out.println("usuario.getFechaCreacion() " +usuario.getFechaCreacion());	
 		}catch(Exception e){
@@ -75,7 +76,7 @@ public class UsuarioDatasourceImpl  implements UsuarioDatasource,Serializable {
 		List<Usuario> listaUsuario =null;
 		try{
 		
-		Query query =	sessionFactory.getCurrentSession().createQuery(" select us.id,us.nombres,us.apellidos,us.email,us.telefono,us.userName,us.password,us.fechaCreacion,us.activo,us.rolId from Usuario us where us.rolId = :rolId ");
+		Query query =	sessionFactory.getCurrentSession().createQuery(" select us from Usuario us where us.rolId = :rolId ");
 		query.setParameter("rolId", usuario.getRolId());
 		listaUsuario  = query.list();			
 		}catch(Exception e){
@@ -89,7 +90,7 @@ public class UsuarioDatasourceImpl  implements UsuarioDatasource,Serializable {
 		List<Usuario> listaUsuario =null;
 		try{
 		
-		Query query =	sessionFactory.getCurrentSession().createQuery(" select f.nombre, f.descripcion from Usuario us , Funcion f, RolFuncion rf  where us.rolId =rf.rolId and rf.funcionId = f.id and us.userName = :userName ");
+		Query query =	sessionFactory.getCurrentSession().createQuery(" select f from Usuario us , Funcion f, RolFuncion rf  where us.rolId =rf.rolId and rf.funcionId = f.id and us.userName = :userName ");
 		query.setParameter("userName", usuario.getUsername());
 		listaUsuario  = query.list();			
 		}catch(Exception e){
@@ -123,8 +124,7 @@ public class UsuarioDatasourceImpl  implements UsuarioDatasource,Serializable {
         	Session	session = sessionFactory.getCurrentSession();
 			session.load(Usuario.class, usuario.getId());
 				session.delete(usuario);
-				session.flush();
-				
+				session.flush();			
 		}
 		catch(Exception e){
 			System.out.println(" Error Delete UsuarioDatasourceImpl "+ e);
